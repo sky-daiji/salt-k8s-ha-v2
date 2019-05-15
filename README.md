@@ -8,7 +8,7 @@
 - Kernel Version: 4.18.16-1.el7.elrepo.x86_64
 - salt-ssh:     salt-ssh 2019.2.0-1
 - Kubernetes：  v1.13.6
-- Etcd:         v3.3.13
+- Etcd:         v3.3.12
 - Docker-ce:    v18.09.2
 - Flannel：     v0.11.0
 - CNI-Plugins： v0.7.4
@@ -146,7 +146,7 @@ Kubernetes二进制文件下载地址： 链接：`https://pan.baidu.com/s/1aIfj
 total 0
 drwx------ 2 root root  94 Mar 18 13:41 cfssl-1.2
 drwx------ 2 root root 195 Mar 18 13:41 cni-plugins-amd64-v0.7.4
-drwx------ 3 root root 123 Mar 18 13:41 etcd-v3.3.13-linux-amd64
+drwx------ 3 root root 123 Mar 18 13:41 etcd-v3.3.12-linux-amd64
 drwx------ 2 root root  47 Mar 18 13:41 flannel-v0.11.0-linux-amd64
 drwx------ 3 root root  17 Mar 18 13:41 k8s-v1.13.6
 drwx------ 2 root root  33 Mar 18 20:17 nginx-1.15.3
@@ -470,5 +470,5 @@ kube-proxy-zgg6t          1/1     Running   2          16h
 
 #### 如果你觉得这个项目不错，欢迎各位打赏，你的打赏是对我们的认可，是我们的动力。
 
-![支付宝支付](https://skymyyang.github.io/img/zfb3.png)
+
 ![微信支付](https://skymyyang.github.io/img/wx1.png)

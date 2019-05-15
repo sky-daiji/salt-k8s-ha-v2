@@ -5,7 +5,7 @@
 # Organization: skymyyyang.github.io
 # Description:  ETCD Cluster
 #******************************************
-{% set etcd_version = "etcd-v3.3.13-linux-amd64" %}
+{% set etcd_version = "etcd-v3.3.12-linux-amd64" %}
 
 include:
   - k8s.modules.base-dir
