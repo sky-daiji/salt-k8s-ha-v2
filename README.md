@@ -35,6 +35,10 @@ IP地址 | Hostname | 最小配置 | Kernel Version
 7. 本文的高可用可通用于任何云上的SDN环境和自建机房环境，列如阿里云的VPC环境中
 8. 本架构ETCD集群使用的是HTTP协议。
 
+## 关于ETCD要不要使用TLS？
+
+1. 首先TLS的目的是为了鉴权为了防止别人任意的连接上你的etcd集群。其实意思就是说如果你要放到公网上的ETCD集群，并开放端口，我建议你一定要用TLS。
+2. 如果你的ETCD集群跑在一个内网环境比如（VPC环境），而且你也不会开放ETCD端口，你的ETCD跑在防火墙之后，一个安全的局域网中，那么你用不用TLS，都行。
 
 ## 技术交流QQ群（加群请备注来源于Github）：
 
@@ -122,7 +126,7 @@ sed -ri '/^[^#]*SELINUX=/s#=.+$#=disabled#' /etc/selinux/config
 2.2 获取本项目 `master` 分支代码，并放置在 `/srv` 目录
 
 ```bash
-[root@linux-node1 ~]# git clone https://github.com/sky-daiji/salt-k8s-ha-v2.git
+[root@linux-node1 ~]# git clone https://github.com/skymyyang/salt-k8s-ha.git
 [root@linux-node1 ~]# cd salt-k8s-ha/
 [root@linux-node1 ~]# mv * /srv/
 [root@linux-node1 srv]# /bin/cp /srv/roster /etc/salt/roster
@@ -131,8 +135,8 @@ sed -ri '/^[^#]*SELINUX=/s#=.+$#=disabled#' /etc/selinux/config
 
 2.4 下载二进制文件，也可以自行官方下载，为了方便国内用户访问，请在百度云盘下载,下载 `k8s-v1.13.6-auto.zip` 。
 下载完成后，将文件移动到 `/srv/salt/k8s/` 目录下，并解压，注意是 `files` 目录在 `/srv/salt/k8s/`目录下。
-Kubernetes二进制文件下载地址： 链接：`https://pan.baidu.com/s/1gbXC3MnDNZIwttsBoHX-JQ `
-提取码：`zwsf`
+Kubernetes二进制文件下载地址： 链接：`https://pan.baidu.com/s/1aIfj-8Zo26bPo_3cXFhkXA `
+提取码：`xwjh`
 
 ```bash
 [root@linux-node1 ~]# cd /srv/salt/k8s/
@@ -213,12 +217,12 @@ MASTER_H3: "linux-node3"
 KUBE_APISERVER: "https://127.0.0.1:8443"
 
 #设置ETCD集群访问地址（必须修改）
-ETCD_ENDPOINTS: "http://192.168.150.141:2379,http://192.168.150.142:2379,http://192.168.150.143:2379"
+ETCD_ENDPOINTS: "https://192.168.150.141:2379,https://192.168.150.142:2379,https://192.168.150.143:2379"
 
 FLANNEL_ETCD_PREFIX: "/kubernetes/network"
 
 #设置ETCD集群初始化列表（必须修改）
-ETCD_CLUSTER: "etcd-node1=http://192.168.150.141:2380,etcd-node2=http://192.168.150.142:2380,etcd-node3=http://192.168.150.143:2380"
+ETCD_CLUSTER: "etcd-node1=https://192.168.150.141:2380,etcd-node2=https://192.168.150.142:2380,etcd-node3=https://192.168.150.143:2380"
 
 #通过Grains FQDN自动获取本机IP地址，请注意保证主机名解析到本机IP地址
 NODE_IP: {{ grains['fqdn_ip4'][0] }}
@@ -316,15 +320,15 @@ VIP_IF: "ens32"
 ```bash
 #先验证etcd
 [root@linux-node1 ~]# source /etc/profile
-[root@linux-node1 ~]# etcdctl --endpoints=http://192.168.150.141:2379 cluster-health
-member 937f18b4916f332b is healthy: got healthy result from http://192.168.150.143:2379
-member d882a8adbfbb5755 is healthy: got healthy result from http://192.168.150.142:2379
-member eae26a25cb42d19f is healthy: got healthy result from http://192.168.150.141:2379
+[root@linux-node1 ~]# etcdctl --endpoints=https://192.168.150.141:2379 cluster-health
+member 937f18b4916f332b is healthy: got healthy result from https://192.168.150.143:2379
+member d882a8adbfbb5755 is healthy: got healthy result from https://192.168.150.142:2379
+member eae26a25cb42d19f is healthy: got healthy result from https://192.168.150.141:2379
 cluster is healthy
 [root@linux-node1 ~]# etcdctl --endpoints=http://192.168.150.141:2379 member list
-937f18b4916f332b: name=etcd-node3 peerURLs=http://192.168.150.143:2380 clientURLs=http://192.168.150.143:2379 isLeader=false
-d882a8adbfbb5755: name=etcd-node2 peerURLs=http://192.168.150.142:2380 clientURLs=http://192.168.150.142:2379 isLeader=false
-eae26a25cb42d19f: name=etcd-node1 peerURLs=http://192.168.150.141:2380 clientURLs=http://192.168.150.141:2379 isLeader=true
+937f18b4916f332b: name=etcd-node3 peerURLs=https://192.168.150.143:2380 clientURLs=https://192.168.150.143:2379 isLeader=false
+d882a8adbfbb5755: name=etcd-node2 peerURLs=https://192.168.150.142:2380 clientURLs=https://192.168.150.142:2379 isLeader=false
+eae26a25cb42d19f: name=etcd-node1 peerURLs=https://192.168.150.141:2380 clientURLs=https://192.168.150.141:2379 isLeader=true
 [root@linux-node1 ~]# kubectl get cs
 NAME                 STATUS    MESSAGE             ERROR
 controller-manager   Healthy   ok
@@ -466,4 +470,5 @@ kube-proxy-zgg6t          1/1     Running   2          16h
 
 #### 如果你觉得这个项目不错，欢迎各位打赏，你的打赏是对我们的认可，是我们的动力。
 
-![微信支付](https://github.com/sky-daiji/salt-k8s-ha-v1/blob/master/images/weixin.png)
+![支付宝支付](https://skymyyang.github.io/img/zfb3.png)
+![微信支付](https://skymyyang.github.io/img/wx1.png)
