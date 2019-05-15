@@ -126,7 +126,7 @@ sed -ri '/^[^#]*SELINUX=/s#=.+$#=disabled#' /etc/selinux/config
 2.2 获取本项目 `master` 分支代码，并放置在 `/srv` 目录
 
 ```bash
-[root@linux-node1 ~]# git clone https://github.com/skymyyang/salt-k8s-ha.git
+[root@linux-node1 ~]# git clone https://github.com/sky-daiji/salt-k8s-ha-v2.git
 [root@linux-node1 ~]# cd salt-k8s-ha/
 [root@linux-node1 ~]# mv * /srv/
 [root@linux-node1 srv]# /bin/cp /srv/roster /etc/salt/roster
@@ -135,8 +135,8 @@ sed -ri '/^[^#]*SELINUX=/s#=.+$#=disabled#' /etc/selinux/config
 
 2.4 下载二进制文件，也可以自行官方下载，为了方便国内用户访问，请在百度云盘下载,下载 `k8s-v1.13.6-auto.zip` 。
 下载完成后，将文件移动到 `/srv/salt/k8s/` 目录下，并解压，注意是 `files` 目录在 `/srv/salt/k8s/`目录下。
-Kubernetes二进制文件下载地址： 链接：`https://pan.baidu.com/s/1aIfj-8Zo26bPo_3cXFhkXA `
-提取码：`xwjh`
+Kubernetes二进制文件下载地址： 链接：`https://pan.baidu.com/s/1gbXC3MnDNZIwttsBoHX-JQ `
+提取码：`zwsf`
 
 ```bash
 [root@linux-node1 ~]# cd /srv/salt/k8s/
@@ -470,5 +470,4 @@ kube-proxy-zgg6t          1/1     Running   2          16h
 
 #### 如果你觉得这个项目不错，欢迎各位打赏，你的打赏是对我们的认可，是我们的动力。
 
-![支付宝支付](https://skymyyang.github.io/img/zfb3.png)
-![微信支付](https://skymyyang.github.io/img/wx1.png)
+![微信支付](https://github.com/sky-daiji/salt-k8s-ha-v1/blob/master/images/weixin.png)
