@@ -1,5 +1,5 @@
 # SaltStack自动化部署HA-Kubernetes
-- 本项目在GitHub上，会不定期更新，大家也可以提交ISSUE，地址为：`https://github.com/sky-daiji/salt-k8s-ha`
+- 本项目在GitHub上，会不定期更新，大家也可以提交ISSUE，地址为：`https://github.com/sky-daiji/salt-k8s-ha-v2`
 - SaltStack自动化部署Kubernetes v1.13.6版本（支持HA、TLS双向认证、RBAC授权、Flannel网络、ETCD集群、Kuber-Proxy使用LVS等）。
 
 
@@ -126,17 +126,17 @@ sed -ri '/^[^#]*SELINUX=/s#=.+$#=disabled#' /etc/selinux/config
 2.2 获取本项目 `master` 分支代码，并放置在 `/srv` 目录
 
 ```bash
-[root@linux-node1 ~]# git clone https://github.com/skymyyang/salt-k8s-ha.git
-[root@linux-node1 ~]# cd salt-k8s-ha/
-[root@linux-node1 ~]# mv * /srv/
+[root@linux-node1 ~]# git clone https://github.com/sky-daiji/salt-k8s-ha-v2.git
+[root@linux-node1 ~]# cd salt-k8s-ha-v2/
+[root@linux-node1 salt-k8s-ha-v2]# mv * /srv/
 [root@linux-node1 srv]# /bin/cp /srv/roster /etc/salt/roster
 [root@linux-node1 srv]# /bin/cp /srv/master /etc/salt/master
 ```
 
 2.4 下载二进制文件，也可以自行官方下载，为了方便国内用户访问，请在百度云盘下载,下载 `k8s-v1.13.6-auto.zip` 。
 下载完成后，将文件移动到 `/srv/salt/k8s/` 目录下，并解压，注意是 `files` 目录在 `/srv/salt/k8s/`目录下。
-Kubernetes二进制文件下载地址： 链接：`https://pan.baidu.com/s/1aIfj-8Zo26bPo_3cXFhkXA `
-提取码：`xwjh`
+Kubernetes二进制文件下载地址： 链接：`https://pan.baidu.com/s/1F0Qycf01Tje_rY39XPEj1g `
+提取码：`dinj`
 
 ```bash
 [root@linux-node1 ~]# cd /srv/salt/k8s/
