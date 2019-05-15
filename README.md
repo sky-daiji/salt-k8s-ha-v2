@@ -320,12 +320,12 @@ VIP_IF: "ens32"
 ```bash
 #先验证etcd
 [root@linux-node1 ~]# source /etc/profile
-[root@linux-node1 ~]# etcdctl --endpoints=https://192.168.150.141:2379 cluster-health
+[root@linux-node1 ~]# etcdctl --endpoints=https://192.168.150.141:2379 --ca-file=/opt/kubernetes/ssl/ca.pem   --cert-file=/opt/kubernetes/ssl/etcd.pem   --key-file=/opt/kubernetes/ssl/etcd-key.pem cluster-health
 member 937f18b4916f332b is healthy: got healthy result from https://192.168.150.143:2379
 member d882a8adbfbb5755 is healthy: got healthy result from https://192.168.150.142:2379
 member eae26a25cb42d19f is healthy: got healthy result from https://192.168.150.141:2379
 cluster is healthy
-[root@linux-node1 ~]# etcdctl --endpoints=http://192.168.150.141:2379 member list
+[root@linux-node1 ~]# etcdctl --endpoints=https://192.168.150.141:2379 --ca-file=/opt/kubernetes/ssl/ca.pem   --cert-file=/opt/kubernetes/ssl/etcd.pem   --key-file=/opt/kubernetes/ssl/etcd-key.pem member list
 937f18b4916f332b: name=etcd-node3 peerURLs=https://192.168.150.143:2380 clientURLs=https://192.168.150.143:2379 isLeader=false
 d882a8adbfbb5755: name=etcd-node2 peerURLs=https://192.168.150.142:2380 clientURLs=https://192.168.150.142:2379 isLeader=false
 eae26a25cb42d19f: name=etcd-node1 peerURLs=https://192.168.150.141:2380 clientURLs=https://192.168.150.141:2379 isLeader=true
