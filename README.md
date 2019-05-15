@@ -256,7 +256,7 @@ CLUSTER_DNS_DOMAIN: "cluster.local."
 #DOCKER_REGISTRY: "https://192.168.150.135:5000"
 
 #设置Master的VIP地址(必须修改)
-MASTER_VIP: "192.168.150.253"
+#MASTER_VIP: "192.168.150.253"
 
 #设置网卡名称
 VIP_IF: "ens32"
