@@ -44,8 +44,6 @@ systemctl enable --now chronyd
 ```bash
 yum install wget git  jq psmisc vim -y
 wget -O /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-7.repo
-yum install https://mirrors.aliyun.com/saltstack/yum/redhat/salt-repo-latest-2.el7.noarch.rpm
-sed -i "s/repo.saltstack.com/mirrors.aliyun.com\/saltstack/g" /etc/yum.repos.d/salt-latest.repo
 yum update -y
 ```
 
@@ -80,7 +78,7 @@ RHEL    http://mirror.rc.usf.edu/compute_lock/elrepo/kernel/el7/x86_64/RPMS/
 - 自选版本内核安装方法
 
 ```bash
-export Kernel_Vsersion=4.18.9-1
+export Kernel_Vsersion=4.18.16-1
 wget  http://mirror.rc.usf.edu/compute_lock/elrepo/kernel/el7/x86_64/RPMS/kernel-ml{,-devel}-${Kernel_Vsersion}.el7.elrepo.x86_64.rpm
 yum localinstall -y kernel-ml*
 
