@@ -470,5 +470,4 @@ kube-proxy-zgg6t          1/1     Running   2          16h
 
 #### 如果你觉得这个项目不错，欢迎各位打赏，你的打赏是对我们的认可，是我们的动力。
 
-![支付宝支付](https://skymyyang.github.io/img/zfb3.png)
-![微信支付](https://skymyyang.github.io/img/wx1.png)
+![微信支付](https://github.com/sky-daiji/salt-k8s-ha-v1/blob/master/images/weixin.png)
