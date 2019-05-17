@@ -463,7 +463,7 @@ kube-proxy-zgg6t          1/1     Running   2          16h
         <td><a href="docs/ca-install.md">3.CA部署</a></td>
         <td><a href="docs/etcd-install.md">4.ETCD集群部署</a></td>
         <td><a href="docs/master-install.md">5.Master节点部署</a></td>
-        <td><a href="docs/node-install">6.Node节点部署</a></td>
+        <td><a href="docs/node-install.md">6.Node节点部署</a></td>
         <td><a href="docs/flannel-install.md">7.Flannel部署</a></td>
     </tr>
 </table>
