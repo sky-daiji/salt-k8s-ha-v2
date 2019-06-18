@@ -62,28 +62,28 @@ init-pkg:
       - conntrack-tools
       - net-tools
 
-ipvs-modules-set:
-  file.managed:
-    - name: /etc/modules-load.d/ipvs.conf
-    - source: salt://k8s/templates/kube-proxy/ipvs.conf.template
-    - user: root
-    - group: root
-    - mode: 644
-    - template: jinja
-  cmd.run:
-    - name: /usr/bin/systemctl enable --now systemd-modules-load.service
+# ipvs-modules-set:
+#  file.managed:
+#    - name: /etc/modules-load.d/ipvs.conf
+#    - source: salt://k8s/templates/kube-proxy/ipvs.conf.template
+#    - user: root
+#    - group: root
+#    - mode: 644
+#    - template: jinja
+#  cmd.run:
+#    - name: /usr/bin/systemctl enable --now systemd-modules-load.service
 
 
-sysctl-k8s-conf:
-  file.managed:
-    - name: /etc/sysctl.d/k8s.conf
-    - source: salt://k8s/templates/docker/k8s.conf.template
-    - user: root
-    - group: root
-    - mode: 644
-    - template: jinja
-  cmd.run:
-    - name: /usr/sbin/sysctl --system
+# sysctl-k8s-conf:
+#  file.managed:
+#    - name: /etc/sysctl.d/k8s.conf
+#    - source: salt://k8s/templates/docker/k8s.conf.template
+#    - user: root
+#    - group: root
+#    - mode: 644
+#    - template: jinja
+#  cmd.run:
+#    - name: /usr/sbin/sysctl --system
 #设置 rsyslogd 和 systemd journald
 99-prophet.conf:
   file.managed:
