@@ -52,7 +52,7 @@ IP地址 | Hostname | 最小配置 | Kernel Version
 
 ## 案例架构图
 
-  ![架构图](https://skymyyang.github.io/img/k8s3.png)
+  ![架构图](https://github.com/sky-daiji/salt-k8s-ha-v1/blob/master/images/k8s.jpg)
 
 ## 0.系统初始化(必备)
 
