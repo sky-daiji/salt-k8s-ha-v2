@@ -3,7 +3,7 @@
 ## 1.创建logging命名空间
 ```
 [root@linux-node1 ~]# kubectl create ns logging
-
+```
 ## 2.给所有节点打上标签
 
 ```
