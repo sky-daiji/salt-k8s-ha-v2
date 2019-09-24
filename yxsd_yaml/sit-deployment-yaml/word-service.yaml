@@ -1,0 +1,24 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: word-service-deployment
+spec:
+  replicas: 1
+  template: 
+    metadata:
+      labels:
+        app: word-service
+    spec:
+      nodeName: cn-beijing.i-2zec8yxlrlzhkl9uzrtq
+      imagePullSecrets:
+        - name: vpc-registry-secret
+      containers:
+      - name: word-service
+        image: registry-vpc.cn-beijing.aliyuncs.com/yxsd/english-word-service:pro
+        imagePullPolicy: Always
+        env:
+          - name: JAVA_OPTS
+            value: "-server -Xms2048m -Xmx2048m -Xss256k -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=384m -XX:SurvivorRatio=8 -Dspring.profiles.active=prod -Dapollo.meta=http://service-apollo-meta-server-test-alpha.sre:8080"
+        ports:
+        - containerPort: 7109
+          containerPort: 9109

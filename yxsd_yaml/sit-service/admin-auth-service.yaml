@@ -1,0 +1,37 @@
+#apiVersion: apps/v1beta1
+#kind: Deployment
+#metadata:
+#  name: admin-auth-server-deployment
+#spec:
+#  replicas: 1
+#  template: 
+#    metadata:
+#      labels:
+#        app: admin-auth-server
+#    spec:
+#      containers:
+#      - name: admin-auth-server
+#        image: harbor.mofangge.net/sit/admin-auth-server:sit
+#        imagePullPolicy: Always
+#        env:
+#          - name: JAVA_OPTS
+#            value: "-Dspring.profiles.active=test -Dapollo.meta=http://service-apollo-config-server-test-alpha.sre:8080"
+#        ports:
+#        - containerPort: 8003
+#          containerPort: 8503
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: admin-auth-server-service
+  namespace: default
+spec:
+  selector:
+    app: admin-auth-server
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 8003
+      name: admin-auth
+
+

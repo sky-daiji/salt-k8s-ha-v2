@@ -1,0 +1,24 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: data-collection-service-deployment
+spec:
+  replicas: 1
+  template: 
+    metadata:
+      labels:
+        app: data-collection-service
+    spec:
+      nodeName: cn-beijing.i-2ze9pi3o4c6n0xaw9l13
+      imagePullSecrets:
+        - name: vpc-registry-secret
+      containers:
+      - name: data-collection-service
+        image: registry-vpc.cn-beijing.aliyuncs.com/yxsd/data-collection-service:pro
+        imagePullPolicy: Always
+        env:
+          - name: JAVA_OPTS
+            value: "-server -Xms1024m -Xmx1024m -Xss256k -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=384m -XX:SurvivorRatio=8 -Dspring.profiles.active=prod -Dapollo.meta=http://service-apollo-meta-server-test-alpha.sre:8080"
+        ports:
+        - containerPort: 8806
+          containerPort: 8816

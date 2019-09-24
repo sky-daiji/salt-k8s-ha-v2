@@ -1,0 +1,73 @@
+#apiVersion: apps/v1beta1
+#kind: Deployment
+#metadata:
+#  name: student-gateway-deployment
+#spec:
+#  replicas: 1
+#  template:
+#    metadata:
+#      labels:
+#        app: student-gateway
+#    spec:
+#      containers:
+#      - name: student-gateway
+#        image: harbor.mofangge.net/sit/student-gateway:sit
+#        env:
+#          - name: JAVA_OPTS
+#            value: "-Dspring.profiles.active=test -Dapollo.meta=http://service-apollo-config-server-test-alpha.sre:8080"
+#        ports:
+#        - containerPort: 8001
+#          containerPort: 8501
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: student-gateway-server
+  namespace: default
+spec:
+  selector:
+    app: student-gateway
+  ports:
+    - protocol: TCP
+      port: 8001
+      name: gwport
+    - protocol: TCP
+      port: 8501
+      name: adminport
+  type: ClusterIP
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: student-gateway-server
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+  - host: dcsj.ymsteam.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: student-gateway-server
+          servicePort: 8001
+  tls:
+  - secretName: secret-https
+    hosts:
+    - dcsj.ymsteam.com
+#apiVersion: extensions/v1beta1
+#kind: Ingress
+#metadata:
+#  name: student-gateway
+#  namespace: default
+#  annotations:
+#    kubernetes.io/ingress.class: traefik
+#spec:
+#  rules:
+#  - host: apigateway.mofangge.net
+#    http:
+#      paths:
+#      - path: /
+#        backend:
+#          serviceName: student-gateway-server
+#          servicePort: 8001

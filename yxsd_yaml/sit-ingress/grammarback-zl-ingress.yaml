@@ -1,0 +1,51 @@
+#apiVersion: apps/v1beta1
+#kind: Deployment
+#metadata:
+#  name: student-gateway-deployment
+#spec:
+#  replicas: 1
+#  template:
+#    metadata:
+#      labels:
+#        app: student-gateway
+#    spec:
+#      containers:
+#      - name: student-gateway
+#        image: harbor.mofangge.net/sit/student-gateway:sit
+#        env:
+#          - name: JAVA_OPTS
+#            value: "-Dspring.profiles.active=test -Dapollo.meta=http://service-apollo-config-server-test-alpha.sre:8080"
+#        ports:
+#        - containerPort: 8001
+#          containerPort: 8501
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: grammarback-zl-server
+  namespace: default
+spec:
+  selector:
+    app: grammarback-patent
+  ports:
+    - protocol: TCP
+      port: 7010
+      name: grammarport
+  type: ClusterIP
+---
+#apiVersion: extensions/v1beta1
+#kind: Ingress
+#metadata:
+#  name: grammarback-service
+#  namespace: default
+#  annotations:
+#    kubernetes.io/ingress.class: traefik
+#spec:
+#  rules:
+#  - host: grammarback.mofangge.net
+#    http:
+#      paths:
+#      - path: /
+#        backend:
+#          serviceName: grammarback-server
+#          servicePort: 7104 

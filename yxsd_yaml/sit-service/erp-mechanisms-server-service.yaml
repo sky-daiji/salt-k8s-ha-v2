@@ -1,0 +1,14 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: erp-mechanisms-service-server
+  namespace: default
+spec:
+  selector:
+    app: erp-mechanisms-service
+  ports:
+    - protocol: TCP
+      port: 7102
+      name: erpport
+  type: ClusterIP

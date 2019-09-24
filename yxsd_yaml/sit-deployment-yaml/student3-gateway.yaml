@@ -1,0 +1,23 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: student-gateway3-deployment
+spec:
+  replicas: 1
+  template: 
+    metadata:
+      labels:
+        app: student-gateway
+    spec:
+      nodeName: cn-beijing.i-2ze2a95z0hmsq5k008j8
+      containers:
+      - name: student-gateway3
+        image: registry-vpc.cn-beijing.aliyuncs.com/yxsd/student-gateway:pro
+        imagePullPolicy: Always
+        env:
+          - name: JAVA_OPTS
+
+            value: "-server -Xms1024m -Xmx1024m -Xss256k -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=384m -XX:SurvivorRatio=8  -Dspring.profiles.active=prod -Dapollo.meta=http://service-apollo-meta-server-test-alpha.sre:8080 -server -Xms1024m -Xmx1024m -Xss256k -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=384m -XX:SurvivorRatio=8"
+        ports:
+        - containerPort: 8001
+          containerPort: 8501

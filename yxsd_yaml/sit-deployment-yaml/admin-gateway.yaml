@@ -1,0 +1,25 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: admin-gateway-deployment
+spec:
+  replicas: 1
+  template: 
+    metadata:
+      labels:
+        app: admin-gateway
+    spec:
+      imagePullSecrets:
+        - name: vpc-registry-secret
+      containers:
+      - name: admin-gateway
+        image: registry-vpc.cn-beijing.aliyuncs.com/yxsd/admin-gateway:pro
+        imagePullPolicy: Always
+        env:
+          - name: JAVA_OPTS
+            value: "-server -Xms1024m -Xmx1024m -Xss256k -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=384m -XX:SurvivorRatio=8 -Dspring.profiles.active=prod -Dapollo.meta=http://service-apollo-meta-server-test-alpha.sre:8080 -Deureka.client.serviceUrl.defaultZone=http://eureka-service.eureka:8761/eureka"
+          - name: AUTH_SERVER_USER_INFO_URI
+            value: "http://admin-auth-server-service:8003/me"
+        ports:
+        - containerPort: 8002
+          containerPort: 8502

@@ -1,0 +1,23 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: grammarback-service-deployment
+spec:
+  replicas: 1
+  template: 
+    metadata:
+      labels:
+        app: grammarback-service
+    spec:
+      imagePullSecrets:
+        - name: vpc-registry-secret
+      containers:
+      - name: grammarback-service
+        image: registry-vpc.cn-beijing.aliyuncs.com/yxsd/grammar-service:pro
+        imagePullPolicy: Always
+        env:
+          - name: JAVA_OPTS
+            value: "-server -Xms1024m -Xmx1024m -Xss256k -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=384m -XX:SurvivorRatio=8  -Dspring.profiles.active=prod -Dapollo.meta=http://service-apollo-meta-server-test-alpha.sre:8080"
+        ports:
+        - containerPort: 7104
+          containerPort: 9104

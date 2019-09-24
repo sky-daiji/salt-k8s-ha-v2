@@ -1,0 +1,19 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: test-nginx-deployment
+spec:
+  replicas: 1
+  template: 
+    metadata:
+      labels:
+        app: test-nginx
+    spec:
+      imagePullSecrets:
+        - name: vpc-registry-secret
+      containers:
+      - name: test-nginx
+        image: registry-vpc.cn-beijing.aliyuncs.com/yxsd/test_nginx
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80

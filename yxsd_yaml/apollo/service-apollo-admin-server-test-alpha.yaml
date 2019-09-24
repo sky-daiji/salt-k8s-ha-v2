@@ -1,0 +1,97 @@
+
+---
+# configmap for apollo-admin-server-test-alpha
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  namespace: sre
+  name: configmap-apollo-admin-server-test-alpha
+data:
+  application-github.properties: |
+    spring.datasource.url = jdbc:mysql://steam-mysql57.mysql.rds.aliyuncs.com:3306/AlphaApolloConfigDB?characterEncoding=utf8
+    spring.datasource.username = apollo
+    spring.datasource.password = Apollo@Yxsd
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  namespace: sre
+  name: service-apollo-admin-server-test-alpha
+  labels:
+    app: service-apollo-admin-server-test-alpha
+spec:
+  ports:
+    - protocol: TCP
+      port: 8090
+  selector:
+    app: pod-apollo-admin-server-test-alpha
+  type: ClusterIP
+
+---
+kind: Deployment
+apiVersion: apps/v1beta2
+metadata:
+  namespace: sre
+  name: deployment-apollo-admin-server-test-alpha
+  labels:
+    app: deployment-apollo-admin-server-test-alpha
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: pod-apollo-admin-server-test-alpha
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: pod-apollo-admin-server-test-alpha
+    spec:
+      nodeName: cn-beijing.i-2zec8yxlrlzhkl9uzrtq
+      volumes:
+        - name: volume-configmap-apollo-admin-server-test-alpha
+          configMap:
+            name: configmap-apollo-admin-server-test-alpha
+            items:
+              - key: application-github.properties
+                path: application-github.properties
+      
+      imagePullSecrets:
+        - name: vpc-registry-secret-apollo
+      containers:
+        - image: registry-vpc.cn-beijing.aliyuncs.com/yxsd/apollo-adminservice:sit
+          resources: 
+            requests: 
+              memory: "256Mi"
+            limits:
+              memory: "1024Mi"
+          securityContext:
+            privileged: true
+          imagePullPolicy: IfNotPresent
+          name: container-apollo-admin-server-test-alpha
+          ports:
+            - protocol: TCP
+              containerPort: 8090
+          
+          env:
+            - name: APOLLO_ADMIN_SERVICE_NAME
+              value: "service-apollo-admin-server-test-alpha.sre"
+          
+          readinessProbe:
+            tcpSocket:
+              port: 8090
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          
+          livenessProbe:
+            tcpSocket:
+              port: 8090
+            initialDelaySeconds: 120
+            periodSeconds: 10
+          
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always

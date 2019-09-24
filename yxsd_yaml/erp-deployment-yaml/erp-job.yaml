@@ -1,0 +1,23 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: erp-job-deployment
+spec:
+  replicas: 1
+  template: 
+    metadata:
+      labels:
+        app: erp-job
+    spec:
+      imagePullSecrets:
+        - name: vpc-registry-secret
+      containers:
+      - name: erp-job
+        image: registry-vpc.cn-beijing.aliyuncs.com/yxsd/erp-job:pro
+        imagePullPolicy: Always
+        env:
+          - name: JAVA_OPTS
+            value: "-server -Xms1024m -Xmx1024m -Xss256k -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=384m -XX:SurvivorRatio=8 -Dspring.profiles.active=prod -Dapollo.meta=http://service-apollo-meta-server-test-alpha.sre:8080"
+        ports:
+        - containerPort: 7120
+          containerPort: 9120
